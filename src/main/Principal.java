@@ -9,10 +9,14 @@ import Modelagem.Carro;
 import Modelagem.Marca;
 import Modelagem.Marcas;
 import Modelagem.Modelo;
+import WarpSQL.SelectRecords;
 import Modelagem.Estacionamento;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Principal {
 
@@ -28,7 +32,7 @@ public class Principal {
 		// opcao
 		// chamar metodos static que correspondam as opcoes de menu
 		String opcao;
-
+		loadInfo();
 		while(true){
 			System.out.println("Bem-Vindo ao Sistema Júpiter de Controle de Estacionamento");
 			System.out.println("Escolha dentre as opções para prosseguir:");
@@ -109,8 +113,6 @@ public class Principal {
 				case "O":
 					estacionamento.showVagasOcupadas();
 				break;
-
-				
 
 				case "M":
 					marcas.showModelos();
@@ -317,5 +319,50 @@ public class Principal {
 		for (Carro save_carro : estacionamento.getHistorico()) {
 			save_carro.saveCarro();
 		}
+	}
+
+	private static void loadInfo(){
+		int idMarca;
+		String nomeMarca;
+		int idModelo;
+		String nomeModelo;
+		int idCarro;
+		String dtEntrada;
+		String dtSaida;
+		String placaCarro;
+		ResultSet rsMarca;
+		ResultSet rsModelo;
+		Marca marca;
+		Modelo modelo;
+
+		SelectRecords sRecords = new SelectRecords();
+
+		rsMarca = sRecords.selectMarca();
+		try {
+			while(rsMarca.next()){
+				idMarca = rsMarca.getInt(1);
+				nomeMarca = rsMarca.getString(2);
+				marca = marcas.newMarca(idMarca, nomeMarca);
+
+				rsModelo = sRecords.selectModelo(idMarca);
+				while(rsModelo.next()){
+					idModelo = rsModelo.getInt(1);
+					nomeModelo = rsModelo.getString(2);
+					modelo = marcas.newModelo(idModelo,nomeModelo,marca);
+
+					ResultSet rsCarro = sRecords.selectCarro(idModelo);
+					while(rsCarro.next()){
+						idCarro = rsCarro.getInt(1);
+						placaCarro = rsCarro.getString(2);
+						dtEntrada = rsCarro.getString(3);
+						dtSaida = rsCarro.getString(4);
+						Carro carro = new Carro(idCarro, placaCarro, dtEntrada, dtSaida, modelo);
+						estacionamento.addCarro(idCarro, carro);
+					}
+				}
+			}
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 	}
 }

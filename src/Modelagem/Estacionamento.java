@@ -23,7 +23,7 @@ public class Estacionamento {
         return vagas.get(idx);
     }
 
-    public Carro getCarro(String placa) {     
+    public Carro getCarro(String placa) {
 		for (Carro carro: vagas.values()){
 			if(carro.isPlaca(placa)){
 				return carro;
@@ -45,7 +45,7 @@ public class Estacionamento {
         System.out.println("Vaga:Livre");
         for (Integer idx = 1; idx <= 100; idx++) {
             if(!vagas_ocupadas.contains(idx)){
-                System.out.println(idx+":Livre");  
+                System.out.println(idx+":Livre");
             }
         }
     }
@@ -56,7 +56,7 @@ public class Estacionamento {
 
     public void setVaga(Integer idx, Carro carro) {
         if(idx > 100 || idx < 1)
-        {   
+        {
             System.out.println("Vaga invalida");
             return;
         }
@@ -131,5 +131,14 @@ public class Estacionamento {
 
     public ArrayList<Carro> getHistorico() {
         return historico;
+    }
+
+    public void addCarro(int idCarro, Carro carro) {
+        if(carro.getSaida()==null){
+            this.setVaga(getPrimeiraVagaLivre(),carro);
+        }
+        else{
+            historico.add(carro);
+        }
     }
 }

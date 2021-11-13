@@ -27,6 +27,19 @@ public class Carro {
 		this.entrada = entrada;
 		this.idCarro = ++counter;
 	}
+	
+	public Carro(int idCarro, String placa, String entrada, String saida, Modelo modelo) {
+		this.placa = placa;
+		this.modelo = modelo;
+		this.entrada = LocalDateTime.parse(entrada);
+		if(!saida.equals("null")){
+			System.out.println(saida);
+			this.saida = LocalDateTime.parse(saida);
+			getValor();
+		}
+		this.idCarro = idCarro;
+		counter = counter>idCarro?++counter:idCarro+1;
+	}
 
 	public void setSaida(LocalDateTime saida) {
 		if(saida.isAfter(this.entrada)){
@@ -104,8 +117,12 @@ public class Carro {
 
 	public void saveCarro(){
 		String valor;
-		valor = ""+idCarro+","+placa+","+entrada+","+saida+","+modelo.getIdModelo();
+		valor = "'"+idCarro+"','"+placa+"','"+entrada+"','"+saida+"','"+modelo.getIdModelo()+"'";
         InsertRecords insert = new InsertRecords();
 		insert.InsertInto("Carro","id,placa,dtEntrada,dtSaida,idModelo",valor);
+	}
+
+	public LocalDateTime getSaida() {
+		return saida;
 	}
 }

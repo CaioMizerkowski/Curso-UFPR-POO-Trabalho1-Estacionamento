@@ -16,6 +16,12 @@ public class Marca {
 		this.idMarca = ++counter;
 	}
 
+	public Marca(int id, String nome){
+		this.nome = nome;
+		this.idMarca = id;
+		counter = counter>id?++counter:id+1;
+	}
+
 	public boolean isNome(String nome) {
 		return nome.equals(this.nome);
 	}
@@ -45,7 +51,7 @@ public class Marca {
 	}
 
 	public void saveMarca(){
-        String valor = ""+idMarca+","+nome;
+        String valor = "'"+idMarca+"','"+nome+"'";
         InsertRecords insert = new InsertRecords(); 
 		insert.InsertInto("Marca","id,marca",valor);
 	}

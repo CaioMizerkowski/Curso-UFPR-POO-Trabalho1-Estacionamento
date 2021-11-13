@@ -48,9 +48,35 @@ public class SelectRecords {
         }
     }
 
+    public ResultSet selectModelo(int idMarca) {
+        String sql = "SELECT id, modelo FROM modelo WHERE idMarca = "+idMarca;
+        try {
+            Connection conn = this.connect();
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql);
+            return rs;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     public ResultSet selectCarro(){
         String sql = "SELECT id, placa, dtEntrada, dtSaida, idModelo FROM carro";
 
+        try {
+            Connection conn = this.connect();
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql);
+            return rs;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ResultSet selectCarro(int idModelo) {
+        String sql = "SELECT id, placa, dtEntrada, dtSaida FROM carro WHERE idModelo = "+idModelo;
         try {
             Connection conn = this.connect();
             Statement stmt  = conn.createStatement();
@@ -66,5 +92,6 @@ public class SelectRecords {
         SelectRecords app = new SelectRecords();
         app.selectModelo();
     }
+
 
 }

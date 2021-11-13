@@ -15,7 +15,14 @@ public class Modelo {
 		this.idModelo = ++counter;
 	}
 
-	public Marca getMarca() {
+	public Modelo(int idModelo, String nome, Marca marca) {
+		this.nome = nome;
+		this.marca = marca;
+		this.idModelo = idModelo;
+		counter = counter>idModelo?++counter:idModelo+1;
+    }
+
+    public Marca getMarca() {
 		return marca;
 	}
 
@@ -32,7 +39,7 @@ public class Modelo {
 	}
 
 	public void saveModelo(){
-        String valor = ""+idModelo+","+nome+","+marca.getIdMarca();
+        String valor = "'"+idModelo+"','"+nome+"','"+marca.getIdMarca()+"'";
         InsertRecords insert = new InsertRecords(); 
 		insert.InsertInto("Modelo","id,modelo,idmarca",valor);
 	}

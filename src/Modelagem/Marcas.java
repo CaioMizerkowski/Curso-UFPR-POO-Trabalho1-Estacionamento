@@ -29,6 +29,12 @@ public class Marcas {
 		return marca;
 	}
 
+    public Marca newMarca(int id, String nome) {
+		Marca marca = new Marca(id,nome);
+		marcas.add(marca);
+		return marca;
+	}
+
 	public Modelo newModelo(String nome, Marca marca) {
 		Modelo modelo;
 		modelo = findModelo(nome, marca);
@@ -132,7 +138,10 @@ public class Marcas {
 		return marca.getModelo(idx-1);
 	}
 
-	public void saveMarcas(){
+    public Modelo newModelo(int idModelo, String nomeModelo, Marca marca) {
+		Modelo modelo = new Modelo(idModelo, nomeModelo, marca);
+		marca.addModelo(modelo);
+		return modelo;
+    }
 
-	}
 }
