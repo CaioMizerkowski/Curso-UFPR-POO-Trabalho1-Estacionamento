@@ -236,6 +236,7 @@ public class Principal {
 
 	private static void entradaCarro() {
 		int idx;
+		String opcao;
 		if(estacionamento.isFull()){
 			System.out.println("Sem vagas disponiveis, estacionamento lotado");
 			return;
@@ -251,10 +252,17 @@ public class Principal {
 
 		Carro carro = new Carro(placa, modelo, dt_entrada);
 
-		System.out.println("Escolha a vaga disponível para estacionar:");
-		estacionamento.showVagasLivres();
-		idx = scanner.nextInt();
-		scanner.nextLine();
+		System.out.println("Escolher a primeira vaga livre? [S/n]:");
+		opcao = scanner.nextLine();
+		if(opcao.equalsIgnoreCase("S")){
+			idx = estacionamento.getPrimeiraVagaLivre();	
+		}
+		else{
+			System.out.println("Escolha umas das vagas disponível para estacionar:");
+			estacionamento.showVagasLivres();
+			idx = scanner.nextInt();
+			scanner.nextLine();
+		}
 		estacionamento.setVaga(idx, carro);
 	}
 
