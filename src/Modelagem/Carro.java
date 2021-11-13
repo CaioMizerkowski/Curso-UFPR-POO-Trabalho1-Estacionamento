@@ -2,6 +2,9 @@ package Modelagem;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import WarpSQL.InsertRecords;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.lang.Math;
@@ -15,11 +18,14 @@ public class Carro {
 	private float valor;
 	private static float preco_primeira_hora = 10;
 	private static float preco_quarto_de_hora = 2;
+	private int idCarro;
+	private static int counter = 0;
 
 	public Carro(String placa, Modelo modelo, LocalDateTime entrada) {
 		this.placa = placa;
 		this.modelo = modelo;
 		this.entrada = entrada;
+		this.idCarro = ++counter;
 	}
 
 	public void setSaida(LocalDateTime saida) {
@@ -79,7 +85,14 @@ public class Carro {
 		String saida = this.saida.format(formatter);
 		String placa = this.placa;
 		String valor = Float.toString(this.valor);
-		return placa+' '+modelo+' '+marca+' '+entrada+' '+saida+' '+valor;
+
+		String retorno = "CARRO\n-Placa: "+placa+
+		"\n-Marca:"+marca+
+		"\n-Modelo"+modelo+
+		"\n-Entrada:"+entrada+
+		"\n-Saida:"+saida+
+		"\n-Valor:"+valor+"\n";
+		return retorno;
 	}
 
 	public boolean isDateEntrada(LocalDate data){
@@ -89,4 +102,10 @@ public class Carro {
 			return false;
 	}
 
+	public void saveCarro(){
+		String valor;
+		valor = ""+idCarro+","+placa+","+entrada+","+saida+","+modelo.getIdModelo();
+        InsertRecords insert = new InsertRecords();
+		insert.InsertInto("Carro","id,placa,dtEntrada,dtSaida,idModelo",valor);
+	}
 }

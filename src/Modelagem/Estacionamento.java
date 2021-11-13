@@ -128,4 +128,8 @@ public class Estacionamento {
         }
         return false;
     }
+
+    public ArrayList<Carro> getHistorico() {
+        return historico;
+    }
 }

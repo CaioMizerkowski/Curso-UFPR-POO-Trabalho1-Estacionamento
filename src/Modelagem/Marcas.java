@@ -5,7 +5,15 @@ import java.util.Scanner;
 
 public class Marcas {
    	private static ArrayList<Marca> marcas = new ArrayList<Marca>();
-	private static Scanner scanner = new Scanner(System.in);
+	private Scanner scanner = new Scanner(System.in);
+
+	public void addMarca(Marca marca){
+		marcas.add(marca);
+	}
+	
+	public ArrayList<Marca> getMarcas() {
+		return marcas;
+	}
 
     public Marca newMarca(String nome) {
 		Marca marca;
@@ -58,26 +66,34 @@ public class Marcas {
 		return null;
 	}
 
-	private static void showMarcas(){
+	public void showMarcas(){
 		int i=1;
 		System.out.println("0 - Nova Marca");
 		for (Marca marca : marcas) {
-			System.out.println(i+" - "+marca.getNome());
+			System.out.println(i+" - "+marca);
 			i++;
 		}
 	}
 
-	private static void showModelos(Marca marca){
+	public void showModelos(Marca marca){
 		int i=1;
 		System.out.println("0 - Novo Modelo");
 		for (Modelo modelo : marca.getModelos()) {
-			System.out.println(i+" - "+modelo.getNome());
+			System.out.println(i+" - "+modelo);
 			i++;
+		}
+	}
+
+	public void showModelos(){
+		for (Marca marca : marcas) {
+			System.out.println(marca+":");
+			for (Modelo modelo : marca.getModelos()) {
+				System.out.println("-"+modelo);
+			}
 		}
 	}
 
 	public Marca selectMarca(){
-
 		int idx;
 		System.out.println("Escolha a marca que gostaria:");
 		showMarcas();
@@ -116,5 +132,7 @@ public class Marcas {
 		return marca.getModelo(idx-1);
 	}
 
+	public void saveMarcas(){
 
+	}
 }
