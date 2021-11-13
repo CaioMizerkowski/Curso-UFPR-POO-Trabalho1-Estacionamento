@@ -187,10 +187,10 @@ public class Principal {
 		String opcao;
 
 		while(true){
-			System.out.println("Deseja utilizar o horario e data atual? [Y/n]");
+			System.out.println("Deseja utilizar o horario e data atual? [S/n]");
 			opcao = scanner.nextLine();
 			switch(opcao.toUpperCase()){
-				case "Y":
+				case "S":
 				case "":
 					datetime = LocalDateTime.now();
 					return datetime;
@@ -254,7 +254,7 @@ public class Principal {
 
 		System.out.println("Escolher a primeira vaga livre? [S/n]:");
 		opcao = scanner.nextLine();
-		if(opcao.equalsIgnoreCase("S")){
+		if(opcao.equalsIgnoreCase("S") || opcao.equalsIgnoreCase("")){
 			idx = estacionamento.getPrimeiraVagaLivre();	
 		}
 		else{

@@ -61,12 +61,12 @@ public class Carro {
 	public float getValor() {
 		Duration duration = Duration.between(this.entrada,this.saida);
 		long minutos = duration.toMinutes();
-		if(minutos<=60)
+		this.valor = preco_primeira_hora;
+		if(minutos>60)
 		{
-			return preco_primeira_hora;
+			int quarto_de_hora = (int) Math.ceil(((float) minutos - 60)/15);
+			this.valor += preco_quarto_de_hora * quarto_de_hora;
 		}
-		int quarto_de_hora = (int) Math.ceil(((float) minutos - 60)/15);
-		this.valor = preco_quarto_de_hora * quarto_de_hora;
 		return this.valor;
 	}
 
@@ -91,7 +91,7 @@ public class Carro {
 	}
 
 	public String toString(){
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("'yyyy-MM-dd HH:mm'");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		String marca = this.getMarca().getNome();
 		String modelo = this.getModelo().getNome();
 		String entrada = this.entrada.format(formatter);
@@ -109,11 +109,9 @@ public class Carro {
 	}
 
 	public boolean isDateEntrada(LocalDate data){
-		if(this.entrada.toLocalDate() == data){
-			return true;
+		LocalDate dtCarro = this.entrada.toLocalDate();
+		return dtCarro.isEqual(data);
 		}
-			return false;
-	}
 
 	public void saveCarro(){
 		String valor;

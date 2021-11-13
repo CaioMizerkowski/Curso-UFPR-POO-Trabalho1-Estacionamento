@@ -1,6 +1,7 @@
 package Modelagem;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -33,16 +34,19 @@ public class Estacionamento {
 	}
 
     public void showVagasOcupadas(){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         Collection<Integer> vagas_ocupadas = vagas.keySet();
-        System.out.println("Vaga:Placa");
-        for (Integer idx : vagas_ocupadas) {
-            System.out.println(idx+":"+vagas.get(idx).getPlaca());
+        System.out.println("Vaga: Carro");
+        for (Integer idx : vagas_ocupadas) 
+        {
+            Carro carro = vagas.get(idx);
+            System.out.println(idx+": "+carro.getModelo()+" - "+carro.getPlaca()+" - "+carro.getEntrada().format(formatter));
         }
     }
 
     public void showVagasLivres(){
         Collection<Integer> vagas_ocupadas = vagas.keySet();
-        System.out.println("Vaga:Livre");
+        System.out.println("Vaga");
         for (Integer idx = 1; idx <= 100; idx++) {
             if(!vagas_ocupadas.contains(idx)){
                 System.out.println(idx+":Livre");
